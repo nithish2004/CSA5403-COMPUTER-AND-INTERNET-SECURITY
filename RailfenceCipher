@@ -1,0 +1,61 @@
+import java.util.*;
+
+class RailfenceCipherHelper {
+    int depth;
+
+    String encode(String msg, int depth) {
+        int r = depth, l = msg.length(), c = (int) Math.ceil((double) l / depth);
+        char[][] mat = new char[r][c];
+        StringBuilder enc = new StringBuilder();
+        int k = 0;
+
+        for (int i = 0; i < c; i++) {
+            for (int j = 0; j < r; j++) {
+                mat[j][i] = (k < l) ? msg.charAt(k++) : 'X';
+            }
+        }
+        
+        for (char[] row : mat) {
+            for (char ch : row) {
+                enc.append(ch);
+            }
+        }
+        return enc.toString();
+    }
+
+    String decode(String encmsg, int depth) {
+        int r = depth, l = encmsg.length(), c = l / depth;
+        char[][] mat = new char[r][c];
+        StringBuilder dec = new StringBuilder();
+        int k = 0;
+        
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                mat[i][j] = encmsg.charAt(k++);
+            }
+        }
+
+        for (int i = 0; i < c; i++) {
+            for (int j = 0; j < r; j++) {
+                dec.append(mat[j][i]);
+            }
+        }
+        return dec.toString();
+    }
+}
+
+public class RailFenceCipher {
+    public static void main(String[] args) {
+        RailfenceCipherHelper rf = new RailfenceCipherHelper();
+        String msg = "Anna University, Chennai";
+        int depth = 2;
+        
+        String enc = rf.encode(msg, depth);
+        String dec = rf.decode(enc, depth);
+        
+        System.out.println("Simulating Railfence Cipher\n-------------------------");
+        System.out.println("Input Message: " + msg);
+        System.out.println("Encrypted Message: " + enc);
+        System.out.println("Decrypted Message: " + dec);
+    }
+}
