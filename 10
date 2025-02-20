@@ -1,0 +1,28 @@
+import java.util.*;
+
+class DiffieHellman { 
+    public static void main(String args[]) { 
+        int p = 23; // publicly known prime number
+        int g = 5;  // publicly known primitive root
+        int x = 4;  // Alice's secret key
+        int y = 3;  // Bob's secret key
+
+        int aliceSends = (int) (Math.pow(g, x) % p);
+        int bobSends = (int) (Math.pow(g, y) % p);
+
+        int aliceComputes = (int) (Math.pow(bobSends, x) % p);
+        int bobComputes = (int) (Math.pow(aliceSends, y) % p);
+
+        System.out.println("Simulation of Diffie-Hellman key exchange algorithm");
+        System.out.println("---------------------------------------------");
+        System.out.println("Alice Sends : " + aliceSends); 
+        System.out.println("Bob Computes : " + bobComputes); 
+        System.out.println("Bob Sends : " + bobSends); 
+        System.out.println("Alice Computes : " + aliceComputes); 
+
+        if (aliceComputes == bobComputes) 
+            System.out.println("Success: Shared Secrets Match! " + aliceComputes); 
+        else 
+            System.out.println("Error: Shared Secrets do not Match"); 
+    } 
+}
